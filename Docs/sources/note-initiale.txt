@@ -1,0 +1,221 @@
+**Je vous conseille de construire une plateforme de partage entre plusieurs organisations, où MISP gère les renseignements et où la blockchain apporte un registre commun de preuves et de décisions.** Les travaux scientifiques donnent plusieurs façons de réaliser cette séparation.
+
+J’ai recherché des publications chez **IEEE, Wiley et MDPI**, ainsi que leurs versions ouvertes sur **arXiv et des dépôts universitaires**. Voici une première étude de l’art ciblée, puis le cadrage que j’en déduis pour votre projet. Elle constitue une base bibliographique, sans prétendre être une revue systématique exhaustive.
+
+**1. Les publications à étudier**
+
+**A — Une revue de littérature pour comprendre le domaine**
+
+*Dimitrios Chatziamanetoglou et Konstantinos Rantos — « Cyber Threat Intelligence on Blockchain: A Systematic Literature Review », Computers, 2024.*
+
+Cette publication examine les approches associant CTI et blockchain : partage, confidentialité, réputation, qualité des informations et mécanismes de confiance. Elle montre aussi que les solutions étudiées présentent des niveaux de maturité variables, souvent encore expérimentaux. C’est le meilleur point de départ pour organiser votre propre état de l’art. [wesis.cs.duth.gr](https://wesis.cs.duth.gr/wesis_hosting/papers/en_37.pdf?utm_source=chatgpt.com)
+
+**À retenir pour votre projet :** construire une grille de comparaison des solutions avant de choisir les technologies.
+
+Liens : [Article et DOI](https://doi.org/10.3390/computers13030060) · [PDF libre](https://wesis.cs.duth.gr/wesis_hosting/papers/en_37.pdf)
+
+**B — Une architecture directement fondée sur MISP**
+
+*Davy Preuveneers, Wouter Joosen, Jorge Bernal Bernabe et Antonio Skarmeta — « Distributed Security Framework for Reliable Threat Intelligence Sharing », Security and Communication Networks, 2020.*
+
+Les auteurs étendent leur framework TATIS avec un registre distribué. Leur architecture combine **MISP, une passerelle de contrôle d’accès, du chiffrement et une blockchain permissionnée MultiChain**. Les événements restent dans MISP ; des empreintes et des informations de provenance sont enregistrées dans le registre. L’intégration passe par les API REST de MISP. [Wiley Online Library](https://onlinelibrary.wiley.com/doi/10.1155/2020/8833765?utm_source=chatgpt.com)
+
+**À retenir :** vous pouvez ajouter une couche de confiance autour de MISP sans reconstruire une plateforme CTI complète.
+
+**Point critique :** les auteurs reconnaissent que les interactions contournant leur passerelle ne sont pas enregistrées dans le registre. Votre architecture devra donc maîtriser les chemins de publication. [Wiley Online Library](https://onlinelibrary.wiley.com/doi/10.1155/2020/8833765?utm_source=chatgpt.com)
+
+Liens : [Article](https://doi.org/10.1155/2020/8833765) · [PDF libre](https://onlinelibrary.wiley.com/doi/pdf/10.1155/2020/8833765)
+
+**C — Le travail le plus proche de votre choix Ethereum**
+
+*Kealan Dunnett et collaborateurs — « A Trusted, Verifiable and Differential Cyber Threat Intelligence Sharing Framework using Blockchain », IEEE TrustCom, 2022.*
+
+Ce travail propose de partager **différentes parties d’un renseignement selon le destinataire**, tout en permettant de vérifier leur intégrité. Les auteurs présentent un prototype Ethereum et des mécanismes de hachage adaptés à ce partage sélectif. Ici, « differential sharing » signifie divulgation sélective ; il ne s’agit pas de confidentialité différentielle par ajout de bruit. [arxiv.org](https://arxiv.org/pdf/2208.12031?utm_source=chatgpt.com)
+
+**Exemple pour votre projet :** partager un domaine malveillant avec tous les partenaires autorisés, mais réserver les détails du système compromis à un groupe restreint.
+
+**À retenir :** c’est une référence particulièrement utile pour combiner **Ethereum, smart contracts et confidentialité**.
+
+Liens : [Publication IEEE](https://doi.org/10.1109/TrustCom56396.2022.00152) · [Version arXiv](https://arxiv.org/abs/2208.12031) · [PDF libre](https://arxiv.org/pdf/2208.12031)
+
+**D — La gouvernance du partage et la protection de l’identité**
+
+*Yair Allouche et collaborateurs — « TRADE: TRusted Anonymous Data Exchange: Threat Sharing Using Blockchain Technology », prépublication, 2021.*
+
+TRADE propose des politiques de partage contrôlées par smart contracts, une séparation entre identité et activité, ainsi qu’une intégration avec des mécanismes existants comme TAXII. Son objectif est de concilier discrétion des participants et responsabilité de leurs actions. La version consultée est une **prépublication arXiv**, ce qui doit être indiqué dans votre bibliographie. [arxiv.org](https://arxiv.org/abs/2103.13158?utm_source=chatgpt.com)
+
+**À retenir :** définir précisément les règles d’adhésion au réseau, les droits de publication et les conditions d’accès. L’anonymat ne vient pas automatiquement de l’utilisation d’adresses blockchain.
+
+Liens : [Présentation](https://arxiv.org/abs/2103.13158) · [PDF libre](https://arxiv.org/pdf/2103.13158)
+
+**E — La résistance aux faux contributeurs**
+
+*Seonghyeon Gong et Changhoon Lee — « BLOCIS: Blockchain-Based Cyber Threat Intelligence Sharing Framework for Sybil-Resistance », Electronics, 2020.*
+
+BLOCIS étudie les attaques **Sybil**, dans lesquelles un acteur crée plusieurs identités pour influencer le système. Il associe smart contracts, évaluation des contributions, dépôts et récompenses afin de rendre les comportements malveillants plus coûteux. [mdpi.com](https://www.mdpi.com/2079-9292/9/3/521?utm_source=chatgpt.com)
+
+**À retenir :** il faut évaluer les contributeurs et les informations qu’ils soumettent. Enregistrer une fausse information dans un registre difficile à modifier ne la rend pas fiable.
+
+**Mon appréciation :** pour votre première version, une admission contrôlée des organisations sera plus simple à évaluer qu’une économie de jetons.
+
+Liens : [Article](https://doi.org/10.3390/electronics9030521) · [PDF libre](https://www.mdpi.com/2079-9292/9/3/521/pdf)
+
+**F — L’incitation à contribuer**
+
+*Xingbang Ma et collaborateurs — « A Blockchain-Based Incentive Mechanism for Sharing Cyber Threat Intelligence », Electronics, 2023.*
+
+Le mécanisme **B-CTISM** vise le problème des participants qui consomment les renseignements sans contribuer. Les auteurs utilisent la théorie des jeux évolutionnaires et des smart contracts, puis évaluent leur approche par simulation et comparaison. [mdpi.com](https://www.mdpi.com/2079-9292/12/11/2454?utm_source=chatgpt.com)
+
+**À retenir :** la réussite du partage dépend aussi des motivations des organisations.
+
+**Mon appréciation :** un score de contribution peut être une extension intéressante, mais récompenser uniquement le nombre de publications risquerait d’encourager les doublons et les données inutiles.
+
+Lien : [Article en accès libre](https://doi.org/10.3390/electronics12112454) — téléchargement proposé sur la page.
+
+**G — Une architecture récente combinant plusieurs briques**
+
+*Hisham Ali et collaborateurs — « TrustShare: Secure and Trusted Blockchain Framework for Threat Intelligence Sharing », Future Internet, 2025.*
+
+TrustShare combine **Hyperledger Fabric, stockage chiffré hors chaîne sur IPFS, chiffrement par attributs CP-ABE, STIX/TAXII et alignement MITRE ATT&CK**. Il traite notamment le contrôle d’accès et la révocation. C’est une référence utile pour comparer votre architecture à une proposition récente et plus complète. [mdpi.com](https://www.mdpi.com/1999-5903/17/7/289?utm_source=chatgpt.com)
+
+**À retenir :** séparer le contenu, les preuves et les autorisations.
+
+**Mon appréciation :** reproduire toutes ces briques serait ambitieux pour un premier prototype. Il vaut mieux démontrer correctement quelques propriétés mesurables.
+
+Liens : [Article](https://doi.org/10.3390/fi17070289) · [PDF libre](https://www.mdpi.com/1999-5903/17/7/289/pdf)
+
+**H — Une revue récente des exigences et des menaces**
+
+*« A Review of Requirements and Threats in Blockchain-Based Cyber Threat Intelligence Sharing », IEEE SRDS, 2025 ; ajout à IEEE Xplore en janvier 2026.*
+
+Le résumé présente une analyse des exigences de sécurité, de fiabilité, des mécanismes de réputation et des smart contracts. Il indique qu’aucune des solutions examinées ne couvre toutes les exigences critiques et cite notamment la validation des formats et l’identité décentralisée parmi les défis ouverts. **Pour cette référence, ma synthèse repose sur le résumé accessible, pas sur une lecture intégrale.** [IEEE Xplore](https://ieeexplore.ieee.org/abstract/document/11360467?utm_source=chatgpt.com)
+
+**À retenir :** utiliser les exigences et les menaces comme critères de comparaison, au-delà du choix Ethereum ou Hyperledger.
+
+Lien : [Notice IEEE et DOI](https://doi.org/10.1109/SRDS69199.2025.00050) — accès au texte intégral selon les droits disponibles.
+
+**2. Ce que ces travaux impliquent pour votre sujet**
+
+Ma lecture de ce corpus conduit à distinguer cinq problèmes :
+
+| Problème | Question à résoudre dans votre projet |
+|---|---|
+| Provenance | Qui a publié ce renseignement et quelle version a été reçue ? |
+| Intégrité | Le contenu reçu correspond-il à celui enregistré par le producteur ? |
+| Confidentialité | Quelles organisations peuvent accéder au contenu ? |
+| Qualité | L’indicateur est-il pertinent, récent et suffisamment documenté ? |
+| Gouvernance | Qui admet, suspend ou révoque un participant ? |
+
+**La distinction fondamentale est celle entre intégrité et véracité.** Une empreinte permet de vérifier qu’un contenu correspond à une publication antérieure. Elle ne démontre pas qu’une IP est malveillante. Cette dernière appréciation exige des observations, du contexte et éventuellement plusieurs évaluateurs.
+
+Il faut aussi corriger un raccourci fréquent : **MISP possède déjà des fonctions de partage entre instances, des groupes de partage, des contrôles fins de diffusion, des signatures et des journaux d’activité.** Votre justification ne doit donc pas être simplement « MISP est centralisé ». L’apport à étudier est celui d’un **registre partagé entre organisations ayant des administrations distinctes**, avec ses avantages et son surcoût. [misp-project.org](https://misp-project.org/features/?utm_source=chatgpt.com)
+
+**3. Le projet que je vous propose**
+
+Je formulerais votre problématique ainsi :
+
+> **Comment permettre à plusieurs organisations de partager des renseignements de menace vérifiables, avec une diffusion contrôlée et un historique commun, tout en conservant les données sensibles hors de la blockchain ?**
+
+Le prototype représenterait un **consortium de trois organisations et un CERT coordinateur**. Chaque organisation disposerait de son environnement CTI et conserverait la maîtrise de ses publications.
+
+Un scénario concret :
+
+1. L’organisation A détecte une campagne de phishing et crée un événement MISP.
+2. Elle précise les indicateurs, les observations, le niveau de confiance et les destinataires autorisés.
+3. Son connecteur prépare une version partageable et un paquet chiffré.
+4. Une transaction inscrit la preuve du paquet et sa version dans le registre.
+5. L’organisation B, autorisée, récupère le paquet, le déchiffre et vérifie son intégrité.
+6. B ajoute une observation confirmant ou contestant l’indicateur.
+7. Si A corrige sa publication, une nouvelle version conserve le lien avec la précédente.
+
+Cela donne une démonstration compréhensible : **publier, autoriser, vérifier, évaluer et corriger**.
+
+**4. L’architecture envisagée**
+
+Le schéma suivant représente les responsabilités principales. Le stockage hors chaîne serait réparti entre les participants ; les connecteurs seraient déployés par organisation.
+
+```mermaid
+flowchart TD
+    A["Organisation A : MISP"] <--> PA["Connecteur Python A"]
+    B["Organisation B : MISP"] <--> PB["Connecteur Python B"]
+
+    PA <-->|Paquets chiffrés| S["Stockage hors chaîne répliqué"]
+    PB <-->|Paquets chiffrés| S
+
+    PA <-->|Preuves et décisions| L["Blockchain de consortium"]
+    PB <-->|Preuves et décisions| L
+
+    L --- C["Smart contracts : membres, publications, évaluations"]
+```
+
+| Composant | Rôle proposé |
+|---|---|
+| **MISP** | Créer, enrichir, rechercher et exploiter les renseignements |
+| **Python / PyMISP** | Extraire les événements et automatiser les échanges |
+| **MITRE ATT&CK** | Associer des techniques aux événements lorsque le contexte le justifie |
+| **STIX 2.1** | Fournir un format d’échange interopérable |
+| **Web3.py** | Relier les connecteurs Python aux contrats EVM |
+| **Solidity** | Programmer les règles du registre |
+| **Besu avec QBFT** | Héberger une blockchain Ethereum permissionnée |
+| **Stockage hors chaîne** | Conserver les paquets chiffrés et leurs répliques |
+
+STIX décrit les informations ; TAXII est un protocole pour les échanger. MITRE fournit notamment ses données ATT&CK en STIX et via TAXII. Le rattachement d’un simple indicateur à une technique devra rester justifié par les observations disponibles. [docs.oasis-open.org](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html?utm_source=chatgpt.com)
+
+Je recommande **Besu avec QBFT** pour rester dans votre stack Ethereum tout en travaillant avec des membres identifiés. La documentation présente QBFT comme un consensus destiné aux réseaux privés. Vous pourriez prévoir quatre validateurs pour représenter les trois organisations et le CERT. Un déploiement sur un seul ordinateur simulerait cette répartition ; la démonstration d’une indépendance réelle demanderait des administrations et des machines distinctes. [docs.besu-eth.org](https://docs.besu-eth.org/private-networks/how-to/configure/consensus/qbft?utm_source=chatgpt.com)
+
+**5. Quelles données mettre dans la blockchain ?**
+
+Voici ma proposition de séparation :
+
+| Dans le registre | Hors chaîne |
+|---|---|
+| Identifiant de publication et version | Contenu détaillé de l’événement |
+| Adresse du signataire autorisé | Indicateurs et observations |
+| Empreinte du paquet chiffré | Journaux et pièces justificatives |
+| Référence de politique | Identités et détails sensibles |
+| Statut, évaluations et liens de correction | Clés de déchiffrement et secrets |
+
+Pour la première version, l’empreinte du **paquet chiffré exact** est un choix simple à vérifier. Un hash brut d’une IP ou d’un domaine ne constitue pas une protection suffisante contre la recherche par essais.
+
+Les contrats pourraient assurer trois fonctions :
+
+- **Membres :** enregistrer les organisations et leurs droits.
+- **Publications :** enregistrer les preuves, versions et statuts.
+- **Évaluations :** conserver les avis signés des organisations autorisées.
+
+Le contrôle d’accès doit aussi être appliqué par **les connecteurs et la distribution des clés**. Une autorisation inscrite dans un contrat ne protège pas à elle seule un fichier accessible ailleurs.
+
+Enfin, retirer une autorisation peut empêcher de futurs accès par votre plateforme ; cela ne permet pas d’effacer une copie déjà déchiffrée par son destinataire.
+
+**6. Le périmètre réaliste et son évaluation**
+
+Je commencerais par ce socle :
+
+- Deux instances MISP pour démontrer un échange complet.
+- Un réseau blockchain local représentant le consortium.
+- Des connecteurs Python avec authentification des organisations.
+- Publication, chiffrement, vérification d’intégrité et gestion des versions.
+- Une évaluation par organisation, avec justification.
+- Des données synthétiques maîtrisées, complétées par un échantillon de renseignements publics.
+
+L’intégration à **Suricata ou Wazuh**, que vous connaissez déjà, pourrait ensuite montrer l’utilisation opérationnelle du renseignement reçu. Elle constituerait une extension après validation du partage.
+
+Pour obtenir un résultat défendable devant le professeur, je comparerais **MISP seul** et **MISP avec votre couche blockchain** :
+
+| Expérience | Ce qu’elle permet d’évaluer |
+|---|---|
+| Modifier un paquet après publication | Détection de l’altération |
+| Demander une donnée sans autorisation | Application du contrôle d’accès |
+| Réémettre une publication identique | Gestion des doublons et rejeux |
+| Corriger un indicateur | Traçabilité des versions |
+| Publier un indicateur volontairement faux | Distinction entre intégrité et qualité |
+| Arrêter un nœud ou une réplique | Disponibilité et limites de résilience |
+| Augmenter progressivement les publications | Latence, débit et consommation de ressources |
+
+Un **journal signé sans blockchain** serait aussi un bon point de comparaison si le temps le permet : il aiderait à déterminer précisément ce que le consensus distribué apporte.
+
+Pour cadrer les règles de partage, ajoutez à votre bibliographie le **NIST SP 800-150 — Guide to Cyber Threat Information Sharing**. Ce guide institutionnel traite les objectifs, les relations de confiance et les règles de publication ; il ne propose pas d’architecture blockchain. [Page officielle et téléchargement](https://csrc.nist.gov/pubs/sp/800/150/final). [CSRC](https://csrc.nist.gov/pubs/sp/800/150/final?utm_source=chatgpt.com)
+
+**Votre contribution pourrait donc être formulée ainsi :** concevoir et évaluer une intégration MISP–Ethereum permettant un partage confidentiel, des publications vérifiables et une traçabilité commune. C’est une contribution d’ingénierie claire ; la nouveauté scientifique éventuelle devra être établie par la comparaison détaillée avec les travaux existants.
+
+Pour démarrer la lecture, je vous recommande cet ordre : **la revue de 2024 → l’architecture MISP/TATIS → le prototype Ethereum de Dunnett → TrustShare**. Ces quatre références suffisent déjà à préparer une première discussion solide avec votre encadrant.

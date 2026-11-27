@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+configs/
+logs/
+files/
+ssl/
+gnupg/
+secrets/
+
+*.key
+*.pem
+*.p12
+
+*/sources 
