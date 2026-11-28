@@ -121,7 +121,8 @@ services:
       interval: 2s
       timeout: 1s
       retries: 3
-      start_period: 60s
+      # Initial file synchronization on Windows bind mounts can take several minutes.
+      start_period: 15m
       start_interval: 5s
     expose:
       - 9002
@@ -157,7 +158,7 @@ services:
       - "ADMIN_EMAIL=${ADMIN_EMAIL}"
       - "MISP_CONTACT=${MISP_CONTACT}"
       - "MISP_EMAIL=${MISP_EMAIL}"
-      - "ADMIN_PASSWORD=${ADMIN_PASSWORD}"
+      - "ADMIN_PASSWORD=${ADMIN_PASSWORD:?ADMIN_PASSWORD is required}"
       - "ADMIN_KEY=${ADMIN_KEY}"
       - "ADMIN_ORG=${ADMIN_ORG}"
       - "ADMIN_ORG_UUID=${ADMIN_ORG_UUID}"
@@ -286,7 +287,7 @@ services:
       - "MYSQL_HOST=${MYSQL_HOST:-db}"
       - "MYSQL_PORT=${MYSQL_PORT:-3306}"
       - "MYSQL_USER=${MYSQL_USER:-misp}"
-      - "MYSQL_PASSWORD=${MYSQL_PASSWORD:-example}"
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD:?MYSQL_PASSWORD is required}"
       - "MYSQL_DATABASE=${MYSQL_DATABASE:-misp}"
       # mysql TLS settings
       - "MYSQL_TLS=${MYSQL_TLS:-false}"
@@ -296,7 +297,7 @@ services:
       # redis settings
       - "REDIS_HOST=${REDIS_HOST:-redis}"
       - "REDIS_PORT=${REDIS_PORT:-6379}"
-      - "REDIS_PASSWORD=${REDIS_PASSWORD:-redispassword}"
+      - "REDIS_PASSWORD=${REDIS_PASSWORD:?REDIS_PASSWORD is required}"
       - "ENABLE_REDIS_EMPTY_PASSWORD=${ENABLE_REDIS_EMPTY_PASSWORD:-false}"
       # debug setting
       - "DEBUG=${DEBUG}"
@@ -340,8 +341,8 @@ services:
       misp-core:
         condition: service_healthy
     ports:
-      - "${NGINX_HTTP_PORT:-80}:8080"
-      - "${NGINX_HTTPS_PORT:-443}:8443"
+      - "${MISP_BIND_IP:-127.0.0.1}:${NGINX_HTTP_PORT:-8080}:8080"
+      - "${MISP_BIND_IP:-127.0.0.1}:${NGINX_HTTPS_PORT:-8443}:8443"
     volumes:
       - "./ssl:/etc/nginx/certs:ro"
     tmpfs:
@@ -409,7 +410,7 @@ services:
     depends_on:
       - misp-core
     ports:
-      - "${GUARD_PORT:-8888}:${GUARD_PORT:-8888}"
+      - "127.0.0.1:${GUARD_PORT:-8888}:${GUARD_PORT:-8888}"
     environment:
       - "GUARD_PORT=${GUARD_PORT:-8888}"
       - "GUARD_ARGS=${GUARD_ARGS}"
